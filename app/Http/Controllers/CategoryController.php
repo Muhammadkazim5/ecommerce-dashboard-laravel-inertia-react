@@ -16,14 +16,14 @@ class CategoryController extends Controller
     {
         $categories = Category::query()
             ->latest()
-            ->get(['id', 'name','slug','description','status','created_at']);
-            ->map(fn ($category) => [
+            ->get(['id', 'name','slug','description','status','created_at'])
+            ->map(fn (Category $category) => [
                 'id' => $category->id,
                 'name' => $category->name,
                 'slug' => $category->slug,
                 'description' => $category->description,
-                'status' => $category->status,
-                'created_at' => $category->created_at->format('Yd M Y'),
+                'status' => (bool) $category->status,
+                'created_at' => $category->created_at->format('Y d M Y'),
             ]);
         return Inertia::render('categories/index', [
             'categories' => $categories,
