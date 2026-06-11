@@ -77,7 +77,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+          $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:categories,slug',
+            'description' => 'nullable|string',
+            'status' => 'boolean',
+        ]);
+        $validated['status'] = $request->boolean('status');
+        $category->update($validated);
+        return back()->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -85,6 +93,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return back()->with('success', 'Category deleted successfully.');
     }
 }
