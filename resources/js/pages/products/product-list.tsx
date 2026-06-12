@@ -32,38 +32,38 @@ const ProductList = ({ products, onEdit, onDelete }: Props) => {
     <table className="w-full text-left text-sm">
         <thead className="bg-muted text-muted-foreground">
             <tr>
-                <th className="px-4 py-3 font-medium">Image</th>
-                <th className="px-4 py-3 font-medium">Name</th>
-                <th className="px-4 py-3 font-medium">Category</th>
-                <th className="px-4 py-3 font-medium">Price</th>
-                <th className="px-4 py-3 font-medium">Stock</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Actions</th>
+                <th className="px-4 py-3 font-medium ">Name</th>
+                <th className="px-4 py-3 font-medium ">Category</th>
+                <th className="px-4 py-3 font-medium ">Price</th>
+                <th className="px-4 py-3 font-medium ">Stock</th>
+                <th className="px-4 py-3 font-medium ">Status</th>
+                <th className="px-4 py-3 font-medium text-right ">Actions</th>
             </tr>
         </thead>
         <tbody className="divide-y"> 
             {products.map((product) => (
                 <tr key={product.id}>
+                    <td>{product.image_url}</td>
                     <td className="px-4 py-3">
-                        {product.image_url ? (
-                            <img src={product.image_url} alt={product.name} className="h-10 w-10 rounded object-cover" />
-                        ) : (
-                            <span className="text-xs text-muted-foreground">No image</span>
-                        )}
-                    </td>
-                    <td className="px-4 py-3">
-                        <div className="font-medium">{product.name}</div>
-                        {product.slug && <div className="mt-1 text-xs text-muted-foreground">{product.slug}</div>}
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                        {product.category?.name ?? 'No category'}
-                    </td>
+                        <div className="font-medium">
+                        {product.name}
+                        </div>
+                        <div>
+
+                    {
+                        product.slug && <td className="mt-1 text-xs text-muted-foreground">{product.slug}</td>
+                    }
+                        </div>
+                        </td>
+                        <td className='px-4 py-3 text-muted-foreground'>
+                            {product.category?.name ?? 'No category'}
+                        </td>
                     <td className="px-4 py-3">${product.price}</td>
                     <td className="px-4 py-3">{product.stock}</td>
                     <td className="px-4 py-3">
-                        <span className="rounded-full bg-muted px-2 py-1 text-xs">
-                            {product.status ? 'Active' : 'Inactive'}
-                        </span>
+                            <span className=" rounded-fullbg-muted px-2 py-1 text-xs">
+                                {product.status ? 'Active' : 'Inactive'}
+                            </span>
                     </td>
                     <td className="px-4 py-2">
                         <div className="flex justify-end gap-2">
