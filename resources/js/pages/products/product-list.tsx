@@ -32,6 +32,7 @@ const ProductList = ({ products, onEdit, onDelete }: Props) => {
     <table className="w-full text-left text-sm">
         <thead className="bg-muted text-muted-foreground">
             <tr>
+                <th className="px-4 py-3 font-medium ">Image</th>
                 <th className="px-4 py-3 font-medium ">Name</th>
                 <th className="px-4 py-3 font-medium ">Category</th>
                 <th className="px-4 py-3 font-medium ">Price</th>
@@ -43,25 +44,30 @@ const ProductList = ({ products, onEdit, onDelete }: Props) => {
         <tbody className="divide-y"> 
             {products.map((product) => (
                 <tr key={product.id}>
-                    <td>{product.image_url}</td>
                     <td className="px-4 py-3">
-                        <div className="font-medium">
-                        {product.name}
-                        </div>
-                        <div>
-
-                    {
-                        product.slug && <td className="mt-1 text-xs text-muted-foreground">{product.slug}</td>
-                    }
-                        </div>
-                        </td>
+                        {product.image_url ? (
+                            <img
+                                src={product.image_url}
+                                alt={product.name}
+                                className="h-10 w-10 rounded object-cover"
+                            />
+                        ) : (
+                            <div className="h-10 w-10 rounded bg-muted flex items-center justify-center text-xs text-muted-foreground">N/A</div>
+                        )}
+                    </td>
+                    <td className="px-4 py-3">
+                        <div className="font-medium">{product.name}</div>
+                        {product.slug && (
+                            <div className="mt-1 text-xs text-muted-foreground">{product.slug}</div>
+                        )}
+                    </td>
                         <td className='px-4 py-3 text-muted-foreground'>
                             {product.category?.name ?? 'No category'}
                         </td>
                     <td className="px-4 py-3">${product.price}</td>
                     <td className="px-4 py-3">{product.stock}</td>
                     <td className="px-4 py-3">
-                            <span className=" rounded-fullbg-muted px-2 py-1 text-xs">
+                            <span className="rounded-full bg-muted px-2 py-1 text-xs">
                                 {product.status ? 'Active' : 'Inactive'}
                             </span>
                     </td>
