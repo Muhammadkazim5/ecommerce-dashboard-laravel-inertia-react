@@ -1,7 +1,9 @@
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Head, router, useForm } from '@inertiajs/react';
 import { FormEvent, useRef, useState } from 'react';
+import CategoryList from './category-list';
 
 type Category = {
     id: number;
@@ -43,9 +45,10 @@ const Categories = ({ categories, message }: Props) => {
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (editingCategory) {
-            put('/categories' + editingCategory.id, {
+            put('/categories/' + editingCategory.id, {
                 onSuccess: resetForm,
             });
+        } else {
             post('/categories', {
                 onSuccess: resetForm,
             });
@@ -132,8 +135,59 @@ const Categories = ({ categories, message }: Props) => {
                                         errors.slug && <p className="text-sm text-red-600">{errors.slug}</p>
                                     }
                                 </div>
+                                  <div className="grid gap-2">
+                                    <Label htmlFor="name">Description</Label>
+                                    <Input
+                                        id="description"
+                                        name="description"
+                                        tabIndex={2}
+                                        value={data.description}
+                                        onChange={(event) =>
+                                            setData('description', event.target.value)
+                                        }
+                                        placeholder="Laptops"
+                                    />
+                                    {
+                                        errors.description && <p className="text-sm text-red-600">{errors.description}</p>
+                                    }
+                                </div>
+                                <label className="flex items-center gap-2 text-sm">
+                                    <input
+                                        type="checkbox"
+                                        tabIndex={4}
+                                        name="status"
+                                        checked={data.status}
+                                        onChange={(event) =>
+                                            setData('status', event.target.checked)
+                                        }
+                                    />
+                                    Active category
+                                </label>
+                                <div className="flex gap-3">
+                                    {editingCategory && (
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            tabIndex={6}
+                                            onClick={resetForm}
+                                            disabled={processing}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    )}
+                                    <Button
+                                        type="submit"
+                                        tabIndex={5}
+                                        disabled={processing}
+                                    >   
+
+                                      {editingCategory ? 'Update Category' : 'Create Category'}  
+                                      </Button>
+                                </div>
+                               
                             </form>
                         </section>
+                        <CategoryList categories={categories} onEdit={handleEdit} onDelete={handleDelete} />    
                     </div>
                 </section>
             </div>
